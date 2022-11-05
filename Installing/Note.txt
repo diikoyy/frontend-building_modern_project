@@ -1,0 +1,131 @@
+2/ Create Basic Project
+npm init -y
+npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/preset-react
+Create .babelrc file
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}
+create webpack:
+npm install --save-dev webpack webpack-cli webpack-dev-server style-loader css-loader babel-loader
+then create webpack.config.js:
+/* In V3
+ const path = require("path");
+const webpack = require("webpack");
+
+module.exports = {
+	entry: "./src/index.js",
+	mode: "development",
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /(node_modules)/,
+				loader: "babel-loader",
+				options: { presets: ["@babel/env"] },
+			},
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"],
+			},
+		],
+	},
+	resolve: { extensions: ["*", ".js", ".jsx"] },
+	output: {
+		path: path.resolve(__dirname, "dist/"),
+		publicPath: "/dist/",
+		filename: "bundle.js",
+	},
+	devServer: {
+		contentBase: path.join(__dirname, "public/"),
+		port: 3000,
+		publicPath: "http://localhost:3000/dist/",
+		hot: "only",
+	},
+	plugins: [new webpack.HotModuleReplacementPlugin()],
+}; */
+------------------------------------------------------------------------
+//In V4
+const path = require("path");
+const webpack = require("webpack");
+
+module.exports = {
+	entry: "./src/index.js",
+	mode: "development",
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /(node_modules)/,
+				loader: "babel-loader",
+				options: {
+					presets: ["@babel/env"],
+				},
+			},
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"],
+			},
+		],
+	},
+	resolve: {
+		extensions: ["*", ".js", ".jsx"],
+
+	},
+	output: {
+		path: path.resolve(__dirname, "dist/"),
+		publicPath: "/dist/",
+		filename: "bundle.js",
+	},
+	devServer: {
+		//contentBase
+		static: {
+			directory: path.join(__dirname, "public/"),
+		},
+		port: 3000,
+		//publicPath
+		devMiddleware: {
+			publicPath: "https://localhost:3000/dist/",
+		},
+		//hotOnly
+		hot: "only",
+	},
+};
+------------------------------------------------------------------------
+Install react-hot-loader:
+npm install --save-dev react-hot-loader
+then modify in your package.json:
+in scripts:
+"dev": "npx webpack-dev-server --mode development"
+3/ Adding Redux
+npm install redux react-redux
+------------------------------------------------------------------------
+4/ Redux-Thunk
+npm install redux-thunk redux-devtools-extension @babel/runtime
+npm install --save-dev @babel/plugin-transform-runtime
+then go to .babelrc file
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
+    "plugins": ["@babel/plugin-transform-runtime"]
+}
+------------------------------------------------------------------------
+5/ Selectors
+npm install reselect
+To use reselect-selectors
+------------------------------------------------------------------------
+6/ Styled-Components
+npm install styled-components
+------------------------------------------------------------------------
+7/ Testing
+npm install --save-dev mocha chai
+npm install --save-dev @babel/register
+------------------------------------------------------------------------
+7.2/ Testing Redux thunks
+npm install --save-dev sinon node-fetch fetch-mock
+npm i node-fetch@2.6.1
+------------------------------------------------------------------------
